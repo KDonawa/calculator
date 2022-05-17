@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", "sans-serif";
+}
+
+body {
+    background-color: rgb(229, 229, 229);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    background-color: rgb(38, 38, 40);
+    width: 20rem;
+    height: 35rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+.screen {
+    flex: 1;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 1.5rem 2rem;
+    letter-spacing: 0.1rem;
+}
+#lower-text {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+}
+#upper-text {
+    font-size: 1.1rem;
+}
+#upper-text > span {
+    margin-left: 0.5rem;
+}
+
+.keypad {
+    background-color: rgb(50, 50, 56);
+    flex: 1.75;
+    border-radius: 2rem;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+button {
+    background-color: rgba(41, 42, 43, 0.347);
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+}
+button:hover {
+    transform: scale(1.2);
+}
+button:active {
+    transform: scale(1.1);
+}
+#add-btn,
+#subtract-btn,
+#multiply-btn,
+#divide-btn,
+#equal-btn {
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+#modulo-btn {
+    font-weight: 700;
+}
+.scheme-1 {
+    color: rgb(112, 231, 205);
+}
+.scheme-2 {
+    color: rgb(244, 102, 121);
+}
