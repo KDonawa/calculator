@@ -1,109 +1,3 @@
-const numberKeys = document.querySelectorAll(".number-key");
-const operationKeys = document.querySelectorAll(".operation");
-const decimalBtn = document.getElementById("decimal-btn");
-const clearBtn = document.getElementById("clear-btn");
-const undoBtn = document.getElementById("undo-btn");
-const equalBtn = document.getElementById("equal-btn");
-const upperText = document.getElementById("upper-text");
-const lowerText = document.getElementById("lower-text");
-
-numberKeys.forEach((key) => {
-    key.addEventListener("click", () => {
-        calc.inputDigit(key.textContent);
-        displayCalc(calc);
-    });
-});
-operationKeys.forEach((key) => {
-    key.addEventListener("click", () => {
-        calc.inputOperation(key.dataset.value);
-        displayCalc(calc);
-    });
-});
-decimalBtn.addEventListener("click", () => {
-    calc.inputDecimal();
-    displayCalc(calc);
-});
-equalBtn.addEventListener("click", () => {
-    calc.evaluate();
-    displayCalc(calc);
-});
-clearBtn.addEventListener("click", () => {
-    calc.clear();
-    displayCalc(calc);
-});
-undoBtn.addEventListener("click", () => {
-    calc.undo();
-    displayCalc(calc);
-});
-
-function displayCalc(calc) {
-    lowerText.textContent = "";
-    upperText.textContent = "";
-
-    const operation = document.createElement("span");
-    operation.classList.add("scheme-2");
-    switch (calc.currentOperation.join("")) {
-        case "+":
-            operation.innerHTML = "+";
-            break;
-        case "-":
-            operation.innerHTML = "&#150;";
-            break;
-        case "/":
-            operation.innerHTML = "÷";
-            break;
-        case "*":
-            operation.innerHTML = "&#215;";
-            break;
-        case "exp":
-            operation.innerHTML = "^";
-            break;
-        case "%":
-            operation.innerHTML = "%";
-            break;
-        default:
-            operation.innerHTML = "";
-            break;
-    }
-
-    const operand1 = document.createElement("span");
-    operand1.textContent =
-        calc.prevOperand.length > 8
-            ? parseFloat(calc.prevOperand.join("")).toExponential(2)
-            : calc.prevOperand.join("");
-
-    const operand2 = document.createElement("span");
-    operand2.textContent =
-        calc.currentOperand.length > 8
-            ? parseFloat(calc.currentOperand.join("")).toExponential(2)
-            : calc.currentOperand.join("");
-
-    const result = document.createElement("span");
-    result.textContent =
-        calc.currentResult.length > 11
-            ? parseFloat(calc.currentResult.join("")).toExponential(3)
-            : calc.currentResult.join("");
-
-    if (calc.currentResult.length > 0) {
-        lowerText.append(result);
-        upperText.append(operand1, operation, operand2);
-    } else {
-        lowerText.append(operand2);
-        upperText.append(operand1, operation);
-    }
-}
-
-class CustomError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = this.constructor.name;
-    }
-}
-class ZeroOperandsError extends CustomError {}
-class PreviousOperandMissingError extends CustomError {}
-class CurrentOperandMissingError extends CustomError {}
-class ResultExistsError extends CustomError {}
-class MathError extends CustomError {}
 class Calculator {
     currentOperation;
     prevOperand;
@@ -119,9 +13,6 @@ class Calculator {
         this.prevOperand = [];
         this.currentOperand = [];
         this.currentResult = [];
-
-        lowerText.textContent = "";
-        upperText.textContent = "";
     }
 
     undo() {
@@ -152,7 +43,7 @@ class Calculator {
             this.currentOperand = [];
             this.currentOperation = [operation];
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             if (error instanceof PreviousOperandMissingError) {
                 this.prevOperand = [...this.currentOperand];
                 this.currentOperand = [];
@@ -175,7 +66,7 @@ class Calculator {
             const result = this.#attemptEval();
             this.currentResult = result.toString().split("");
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             if (error instanceof MathError) {
                 this.clear();
             }
@@ -208,7 +99,7 @@ class Calculator {
         if (result instanceof Error) {
             throw new MathError(result.message);
         }
-        console.log(result);
+        // console.log(result);
         return result;
     }
 
@@ -259,4 +150,14 @@ class Calculator {
     }
 }
 
-const calc = new Calculator();
+class CustomError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = this.constructor.name;
+    }
+}
+class ZeroOperandsError extends CustomError {}
+class PreviousOperandMissingError extends CustomError {}
+class CurrentOperandMissingError extends CustomError {}
+class ResultExistsError extends CustomError {}
+class MathError extends CustomError {}
