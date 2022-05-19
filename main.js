@@ -10,9 +10,30 @@ document.querySelectorAll(".number-key").forEach((key) => {
 document.querySelectorAll(".operation").forEach((key) => {
     key.addEventListener("click", () => calc.inputOperation(key.dataset.value));
 });
-// this must be called last
 document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => displayCalculator(calc));
+});
+
+// keyboard support
+window.addEventListener("keydown", (e) => {
+    if (e.key >= 0 && e.key <= 9) {
+        calc.inputDigit(e.key);
+    } else if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/" || e.key === "exp" || e.key === "^") {
+        calc.inputOperation(e.key);
+    } else if (e.key === ".") {
+        calc.inputDecimal();
+    } else if (e.key === "=" || e.key === "Enter") {
+        calc.evaluate();
+    } else if (e.key === "Delete") {
+        calc.clear();
+    } else if (e.key === "Backspace") {
+        calc.undo();
+    } else if (e.key === "!") {
+        calc.negate();
+    } else {
+        return;
+    }
+    displayCalculator(calc);
 });
 
 function formatValue(value, maxLength, precision) {
