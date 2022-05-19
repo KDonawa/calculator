@@ -3,6 +3,7 @@ class Calculator {
     prevOperand;
     currentOperand;
     currentResult;
+    currentError;
 
     constructor() {
         this.clear();
@@ -13,6 +14,7 @@ class Calculator {
         this.prevOperand = [];
         this.currentOperand = [];
         this.currentResult = [];
+        this.currentError = null;
     }
 
     undo() {
@@ -102,9 +104,6 @@ class Calculator {
             this.currentResult = result.toString().split("");
         } catch (error) {
             // console.log(error);
-            if (error instanceof MathError) {
-                this.clear();
-            }
         }
     }
 
@@ -128,17 +127,17 @@ class Calculator {
             throw new Error("no operation");
         }
 
-        const result = this.#attemptCalc(
-            parseFloat(this.prevOperand.join("")),
-            parseFloat(this.currentOperand.join("")),
-            this.currentOperation[0]
-        );
-
-        if (result instanceof Error) {
-            throw new MathError(result.message);
+        try {
+            return this.#attemptCalc(
+                parseFloat(this.prevOperand.join("")),
+                parseFloat(this.currentOperand.join("")),
+                this.currentOperation[0]
+            );
+        } catch (error) {
+            this.clear();
+            this.currentError = error;
+            throw error;
         }
-        // console.log(result);
-        return result;
     }
 
     #attemptCalc(operand1, operand2, operation) {
@@ -151,7 +150,7 @@ class Calculator {
                 return operand1 * operand2;
             case "/":
                 if (operand2 === 0) {
-                    return Error("Cannot divide by zero!");
+                    throw new MathError("Zero division error!");
                 }
                 return operand1 / operand2;
             case "%":

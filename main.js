@@ -61,6 +61,12 @@ function displayCalculator(calc) {
     upperText.textContent = "";
     lowerText.textContent = "";
 
+    if (calc.currentError && calc.currentError.name === "MathError") {
+        upperText.innerHTML = `<i><span class="">${calc.currentError.message}</span></i>`;
+        calc.currentError = null;
+        return;
+    }
+
     const operation = formatOperation(calc.currentOperation);
     const operand1 = formatValue(calc.prevOperand, 10, 2);
     const operand2 = formatValue(calc.currentOperand, 10, 2);
