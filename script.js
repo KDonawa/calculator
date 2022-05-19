@@ -69,10 +69,7 @@ class Calculator {
 
     undo() {
         // must go in this order
-        this.#undoHelper(this.currentResult) &&
-            this.#undoHelper(this.currentOperand) &&
-            this.#undoHelper(this.currentOperation) &&
-            this.#undoHelper(this.prevOperand);
+        this.#undoResult() && this.#undoOperand() && this.#undoOperation();
     }
 
     inputDigit(digit) {
@@ -178,19 +175,27 @@ class Calculator {
         }
     }
 
-    #undoHelper(arr) {
-        if (arr.length === 0) return true; // nothing to undo
+    #undoResult() {
+        if (this.currentResult.length === 0) return true;
 
-        arr.pop();
+        this.currentResult = [];
+        return false;
+    }
+    #undoOperand() {
+        if (this.currentOperand.length === 0) return true;
 
-        if (arr === this.currentOperation) {
-            this.currentOperand = [...this.prevOperand];
-            this.prevOperand = [];
+        this.currentOperand.pop();
+        if (this.currentOperand.length === 1 && this.currentOperand[0] === "-") {
+            this.currentOperand.pop();
         }
-        if (arr.length === 1 && arr[0] === "-") {
-            arr.pop();
-        }
+        return false;
+    }
+    #undoOperation() {
+        if (this.currentOperation.length === 0) return true;
 
+        this.currentOperation.pop();
+        this.currentOperand = [...this.prevOperand];
+        this.prevOperand = [];
         return false;
     }
 }
