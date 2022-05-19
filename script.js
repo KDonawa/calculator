@@ -119,7 +119,9 @@ class Calculator {
             this.currentResult = result.toString().split("");
         } catch (error) {
             console.log(error);
-            this.clear();
+            if (error instanceof MathError) {
+                this.clear();
+            }
         }
     }
 
