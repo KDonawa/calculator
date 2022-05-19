@@ -10,31 +10,88 @@ const lowerText = document.getElementById("lower-text");
 numberKeys.forEach((key) => {
     key.addEventListener("click", () => {
         calc.inputDigit(key.textContent);
-        console.log(calc);
+        displayCalc(calc);
     });
 });
 operationKeys.forEach((key) => {
     key.addEventListener("click", () => {
         calc.inputOperation(key.dataset.value);
-        console.log(calc);
+        displayCalc(calc);
     });
 });
 decimalBtn.addEventListener("click", () => {
     calc.inputDecimal();
-    console.log(calc);
+    displayCalc(calc);
 });
 equalBtn.addEventListener("click", () => {
     calc.evaluate();
-    console.log(calc);
+    displayCalc(calc);
 });
 clearBtn.addEventListener("click", () => {
     calc.clear();
-    console.log(calc);
+    displayCalc(calc);
 });
 undoBtn.addEventListener("click", () => {
     calc.undo();
-    console.log(calc);
+    displayCalc(calc);
 });
+
+function displayCalc(calc) {
+    lowerText.textContent = "";
+    upperText.textContent = "";
+
+    const operation = document.createElement("span");
+    operation.classList.add("scheme-2");
+    switch (calc.currentOperation.join("")) {
+        case "+":
+            operation.innerHTML = "+";
+            break;
+        case "-":
+            operation.innerHTML = "&#150;";
+            break;
+        case "/":
+            operation.innerHTML = "÷";
+            break;
+        case "*":
+            operation.innerHTML = "&#215;";
+            break;
+        case "exp":
+            operation.innerHTML = "^";
+            break;
+        case "%":
+            operation.innerHTML = "%";
+            break;
+        default:
+            operation.innerHTML = "";
+            break;
+    }
+
+    const operand1 = document.createElement("span");
+    operand1.textContent =
+        calc.prevOperand.length > 8
+            ? parseFloat(calc.prevOperand.join("")).toExponential(2)
+            : calc.prevOperand.join("");
+
+    const operand2 = document.createElement("span");
+    operand2.textContent =
+        calc.currentOperand.length > 8
+            ? parseFloat(calc.currentOperand.join("")).toExponential(2)
+            : calc.currentOperand.join("");
+
+    const result = document.createElement("span");
+    result.textContent =
+        calc.currentResult.length > 11
+            ? parseFloat(calc.currentResult.join("")).toExponential(3)
+            : calc.currentResult.join("");
+
+    if (calc.currentResult.length > 0) {
+        lowerText.append(result);
+        upperText.append(operand1, operation, operand2);
+    } else {
+        lowerText.append(operand2);
+        upperText.append(operand1, operation);
+    }
+}
 
 class CustomError extends Error {
     constructor(message) {
