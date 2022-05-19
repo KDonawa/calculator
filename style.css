@@ -24,20 +24,28 @@ body {
 .screen {
     flex: 1;
     color: #fff;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: flex-end;
+    justify-content: flex-end; */
     padding: 1.5rem 2rem;
     letter-spacing: 0.1rem;
+    position: relative;
 }
 #lower-text {
     font-size: 2.2rem;
     font-weight: 900;
-    margin-top: 0.5rem;
+    text-align: right;
+    position: absolute;
+    bottom: 1.5rem;
+    right: 2rem;
 }
 #upper-text {
     font-size: 1.1rem;
+    text-align: right;
+    position: absolute;
+    bottom: 4.5rem;
+    right: 2rem;
 }
 #upper-text > span {
     margin-left: 0.5rem;
