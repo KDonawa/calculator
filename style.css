@@ -10,8 +10,10 @@ body {
     background-color: rgb(229, 229, 229);
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    justify-content: space-around;
 }
 
 .scheme-1 {
@@ -120,4 +122,16 @@ button:active {
 #exponent-btn > span {
     position: absolute;
     font-size: 0.7rem;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    /* font-weight: 500; */
+}
+footer > a {
+    margin: 0 0.5rem;
+    color: #000;
+    font-size: 2rem;
 }

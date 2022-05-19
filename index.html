@@ -5,12 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="style.css" />
+        <script src="https://kit.fontawesome.com/4c536a6bd5.js" crossorigin="anonymous"></script>
         <script src="calculator.js" defer></script>
         <script src="main.js" defer></script>
         <title>Calculator</title>
     </head>
     <body>
-        <div class="container">
+        <main class="container">
             <div class="screen">
                 <div id="upper-text"></div>
                 <div id="lower-text"></div>
@@ -40,6 +41,16 @@
                 <button id="decimal-btn">&#149;</button>
                 <button id="equal-btn" class="scheme-2">&#65309;</button>
             </div>
-        </div>
+        </main>
+        <footer>
+            <p>
+                Copyright ©
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>
+                KDonawa
+            </p>
+            <a href="https://github.com/KDonawa" target="_blank"> <i class="fab fa-github"></i></a>
+        </footer>
     </body>
 </html>
