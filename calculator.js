@@ -55,6 +55,8 @@ class Calculator {
     }
 
     inputDecimal() {
+        if (this.currentResult.length > 0) this.clear();
+
         // cannot have multiple decimals
         if (this.currentOperand.includes(".")) return;
 
