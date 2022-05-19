@@ -43,15 +43,18 @@ class CustomError extends Error {
     }
 }
 class ZeroOperandsError extends CustomError {}
-class FirstOperandMissingError extends CustomError {}
-class SecondOperandMissingError extends CustomError {}
+class PreviousOperandMissingError extends CustomError {}
+class CurrentOperandMissingError extends CustomError {}
+class ResultExistsError extends CustomError {}
 class MathError extends CustomError {}
 class Calculator {
+    currentOperation;
+    prevOperand;
+    currentOperand;
+    currentResult;
+
     constructor() {
-        this.currentOperation = [];
-        this.prevOperand = [];
-        this.currentOperand = [];
-        this.currentResult = [];
+        this.clear();
     }
 
     clear() {
@@ -59,6 +62,9 @@ class Calculator {
         this.prevOperand = [];
         this.currentOperand = [];
         this.currentResult = [];
+
+        lowerText.textContent = "";
+        upperText.textContent = "";
     }
 
     undo() {
@@ -70,6 +76,7 @@ class Calculator {
     }
 
     inputDigit(digit) {
+        if (this.currentResult.length > 0) this.clear();
         this.currentOperand.push(digit);
     }
 
@@ -89,24 +96,22 @@ class Calculator {
             const result = this.#attemptEval();
             this.prevOperand = result.toString().split("");
             this.currentOperand = [];
-            this.currentOperation.push(operation);
+            this.currentOperation = [operation];
         } catch (error) {
             console.log(error);
-            if (error instanceof ZeroOperandsError) {
-                if (this.currentResult.length > 0) {
-                    this.prevOperand.push(...this.currentResult);
-                    this.currentResult = [];
-                    this.currentOperation.push(operation);
-                }
-            } else if (error instanceof FirstOperandMissingError) {
-                this.prevOperand.push(...this.currentOperand);
+            if (error instanceof PreviousOperandMissingError) {
+                this.prevOperand = [...this.currentOperand];
                 this.currentOperand = [];
-                this.currentOperation = [];
                 this.currentOperation.push(operation);
-            } else if (error instanceof SecondOperandMissingError) {
+            } else if (error instanceof CurrentOperandMissingError) {
                 // replace old operation with a new one
-                this.currentOperation.pop();
-                this.currentOperation.push(operation);
+                this.currentOperation = [operation];
+            } else if (error instanceof ResultExistsError) {
+                // start new calculation with result as previous operand
+                this.prevOperand = [...this.currentResult];
+                this.currentOperand = [];
+                this.currentResult = [];
+                this.currentOperation = [operation];
             }
         }
     }
@@ -115,12 +120,9 @@ class Calculator {
         try {
             const result = this.#attemptEval();
             this.currentResult = result.toString().split("");
-            this.prevOperand = [];
-            this.currentOperand = [];
         } catch (error) {
             console.log(error);
-            this.prevOperand = [];
-            this.currentOperand = [];
+            this.clear();
         }
     }
 
@@ -129,16 +131,22 @@ class Calculator {
             throw new ZeroOperandsError();
         }
         if (this.prevOperand.length === 0 && this.currentOperand.length > 0) {
-            throw new FirstOperandMissingError();
+            throw new PreviousOperandMissingError();
         }
         if (this.prevOperand.length > 0 && this.currentOperand.length === 0) {
-            throw new SecondOperandMissingError();
+            throw new CurrentOperandMissingError();
+        }
+        if (this.currentResult.length > 0) {
+            throw new ResultExistsError();
+        }
+        if (this.currentOperation.length === 0) {
+            throw new Error("no operation");
         }
 
         const result = this.#attemptCalc(
             parseFloat(this.prevOperand.join("")),
             parseFloat(this.currentOperand.join("")),
-            this.currentOperation.pop()
+            this.currentOperation[0]
         );
 
         if (result instanceof Error) {
@@ -174,9 +182,15 @@ class Calculator {
         if (arr.length === 0) return true; // nothing to undo
 
         arr.pop();
+
+        if (arr === this.currentOperation) {
+            this.currentOperand = [...this.prevOperand];
+            this.prevOperand = [];
+        }
         if (arr.length === 1 && arr[0] === "-") {
             arr.pop();
         }
+
         return false;
     }
 }
