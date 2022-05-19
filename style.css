@@ -13,6 +13,14 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.scheme-1 {
+    color: rgb(112, 231, 205);
+}
+.scheme-2 {
+    color: rgb(244, 102, 121);
+}
+
 .container {
     background-color: rgb(38, 38, 40);
     width: 20rem;
@@ -24,31 +32,35 @@ body {
 .screen {
     flex: 1;
     color: #fff;
-    /* display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end; */
     padding: 1.5rem 2rem;
     letter-spacing: 0.1rem;
     position: relative;
+}
+
+#upper-text {
+    font-size: 1.1rem;
+    text-align: right;
+    position: absolute;
+    bottom: 6rem;
+    right: 2rem;
+}
+#upper-text > span {
+    margin-left: 0.5rem;
 }
 #lower-text {
     font-size: 2.2rem;
     font-weight: 900;
     text-align: right;
     position: absolute;
-    bottom: 1.5rem;
+    bottom: 3rem;
     right: 2rem;
 }
-#upper-text {
-    font-size: 1.1rem;
-    text-align: right;
+#undo-btn {
     position: absolute;
-    bottom: 4.5rem;
-    right: 2rem;
-}
-#upper-text > span {
-    margin-left: 0.5rem;
+    bottom: 0.5rem;
+    right: 3rem;
+    background-color: transparent;
+    font-size: 1.2rem;
 }
 
 .keypad {
@@ -83,12 +95,15 @@ button:active {
     font-size: 1.8rem;
     font-weight: 400;
 }
+
 #modulo-btn {
     font-weight: 700;
 }
-.scheme-1 {
-    color: rgb(112, 231, 205);
+
+#exponent-btn {
+    position: relative;
 }
-.scheme-2 {
-    color: rgb(244, 102, 121);
+#exponent-btn > span {
+    position: absolute;
+    font-size: 0.7rem;
 }

@@ -2,6 +2,7 @@ document.getElementById("equal-btn").addEventListener("click", () => calc.evalua
 document.getElementById("decimal-btn").addEventListener("click", () => calc.inputDecimal());
 document.getElementById("clear-btn").addEventListener("click", () => calc.clear());
 document.getElementById("undo-btn").addEventListener("click", () => calc.undo());
+document.getElementById("plus-minus-btn").addEventListener("click", () => calc.negate());
 
 document.querySelectorAll(".number-key").forEach((key) => {
     key.addEventListener("click", () => calc.inputDigit(key.textContent));
@@ -10,7 +11,7 @@ document.querySelectorAll(".operation").forEach((key) => {
     key.addEventListener("click", () => calc.inputOperation(key.dataset.value));
 });
 // this must be called last
-document.querySelectorAll(".keypad > button").forEach((button) => {
+document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => displayCalculator(calc));
 });
 
@@ -71,6 +72,7 @@ function displayCalculator(calc) {
         lowerText.append(operand2);
         upperText.append(operand1, operation);
     }
+    // console.log(calc);
 }
 
 const calc = new Calculator();

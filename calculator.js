@@ -22,7 +22,34 @@ class Calculator {
 
     inputDigit(digit) {
         if (this.currentResult.length > 0) this.clear();
+        if (this.currentOperand.length === 1 && this.currentOperand[0] === "0") {
+            this.currentOperand.pop();
+        }
         this.currentOperand.push(digit);
+    }
+
+    negate() {
+        if (this.currentResult.length > 0) {
+            // start new calculation with result as previous operand
+            this.prevOperand = [];
+            this.currentOperand = [...this.currentResult];
+            this.currentResult = [];
+            this.currentOperation = [];
+        }
+
+        if (this.currentOperand.length === 0) {
+            this.currentOperand.push("-");
+            return;
+        }
+        if (this.currentOperand.length === 1 && this.currentOperand[0] === "-") {
+            this.currentOperand.pop();
+            return;
+        }
+
+        const negation = -1 * parseFloat(this.currentOperand.join(""));
+        if (isNaN(negation)) return;
+
+        this.currentOperand = negation.toString().split("");
     }
 
     inputDecimal() {
@@ -44,7 +71,15 @@ class Calculator {
             this.currentOperation = [operation];
         } catch (error) {
             // console.log(error);
-            if (error instanceof PreviousOperandMissingError) {
+            if (error instanceof ZeroOperandsError) {
+                if (operation === "+" || operation === "-") {
+                    this.prevOperand.push("0");
+                } else {
+                    this.prevOperand.push("1");
+                }
+                this.currentOperation.push(operation);
+            } else if (error instanceof PreviousOperandMissingError) {
+                // update the previous operand and operation
                 this.prevOperand = [...this.currentOperand];
                 this.currentOperand = [];
                 this.currentOperation.push(operation);
@@ -76,6 +111,9 @@ class Calculator {
     #attemptEval() {
         if (this.prevOperand.length === 0 && this.currentOperand.length === 0) {
             throw new ZeroOperandsError();
+        }
+        if (this.currentOperand.length === 1 && this.currentOperand[0] === "-") {
+            throw new CurrentOperandIncompleteError();
         }
         if (this.prevOperand.length === 0 && this.currentOperand.length > 0) {
             throw new PreviousOperandMissingError();
@@ -135,9 +173,6 @@ class Calculator {
         if (this.currentOperand.length === 0) return true;
 
         this.currentOperand.pop();
-        if (this.currentOperand.length === 1 && this.currentOperand[0] === "-") {
-            this.currentOperand.pop();
-        }
         return false;
     }
     #undoOperation() {
@@ -157,6 +192,7 @@ class CustomError extends Error {
     }
 }
 class ZeroOperandsError extends CustomError {}
+class CurrentOperandIncompleteError extends CustomError {}
 class PreviousOperandMissingError extends CustomError {}
 class CurrentOperandMissingError extends CustomError {}
 class ResultExistsError extends CustomError {}
