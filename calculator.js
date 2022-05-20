@@ -156,6 +156,9 @@ class Calculator {
                 }
                 return operand1 / operand2;
             case "%":
+                if (operand2 === 0) {
+                    throw new MathError("Zero division error!");
+                }
                 return operand1 % operand2;
             case "exp":
                 return operand1 ** operand2;
