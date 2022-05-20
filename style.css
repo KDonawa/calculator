@@ -71,14 +71,6 @@ body {
     animation: cursor-blink 1s steps(2) infinite;
 }
 
-#undo-btn {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 3rem;
-    background-color: transparent;
-    font-size: 1.2rem;
-}
-
 .keypad {
     background-color: rgb(50, 50, 56);
     flex: 1.75;
@@ -89,6 +81,7 @@ body {
     gap: 1rem;
 }
 button {
+    cursor: pointer;
     background-color: rgba(41, 42, 43, 0.347);
     color: #fff;
     border: none;
@@ -100,8 +93,9 @@ button {
 button:hover {
     transform: scale(1.2);
 }
+
 button:active {
-    transform: scale(1.1);
+    font-size: 0.9rem;
 }
 #add-btn,
 #subtract-btn,
@@ -123,12 +117,26 @@ button:active {
     position: absolute;
     font-size: 0.7rem;
 }
+#undo-btn {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 2.5rem;
+    background-color: transparent;
+    font-size: 1.2rem;
+}
+#undo-btn > i {
+    color: #fff;
+    opacity: 0.3;
+    padding: 0.5rem;
+}
+#undo-btn:active {
+    opacity: 0.5;
+}
 
 footer {
     display: flex;
     align-items: center;
     font-size: 1.2rem;
-    /* font-weight: 500; */
 }
 footer > a {
     margin: 0 0.5rem;
