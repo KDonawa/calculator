@@ -112,10 +112,10 @@ function displayCalculator(calc) {
 
     if (calc.currentResult.length > 0) {
         lowerText.append(formatValue(calc.currentResult, 10, 3));
-        upperText.append(formatValue(calc.prevOperand, 8, 2), operation, formatValue(calc.prevOperand, 8, 2));
+        upperText.append(formatValue(calc.prevOperand, 8, 2), operation, formatValue(calc.currentOperand, 8, 2));
     } else {
-        lowerText.append(formatValue(calc.currentOperand, 10, 2));
-        upperText.append(formatValue(calc.prevOperand, 10, 2), operation);
+        lowerText.append(formatValue(calc.currentOperand, 10, 3));
+        upperText.append(formatValue(calc.prevOperand, 10, 3), operation);
     }
 }
 /*************************************/
