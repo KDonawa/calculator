@@ -109,17 +109,14 @@ function displayCalculator(calc) {
     }
 
     const operation = formatOperation(calc.currentOperation);
-    const operand1 = formatValue(calc.prevOperand, 10, 2);
-    const operand2 = formatValue(calc.currentOperand, 10, 2);
 
     if (calc.currentResult.length > 0) {
         lowerText.append(formatValue(calc.currentResult, 10, 3));
-        upperText.append(operand1, operation, operand2);
+        upperText.append(formatValue(calc.prevOperand, 8, 2), operation, formatValue(calc.prevOperand, 8, 2));
     } else {
-        lowerText.append(operand2);
-        upperText.append(operand1, operation);
+        lowerText.append(formatValue(calc.currentOperand, 10, 2));
+        upperText.append(formatValue(calc.prevOperand, 10, 2), operation);
     }
-    // console.log(calc);
 }
 /*************************************/
 

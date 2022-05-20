@@ -96,6 +96,9 @@ class Calculator {
                 this.currentOperand = [];
                 this.currentResult = [];
                 this.currentOperation = [operation];
+            } else if (error instanceof MathError) {
+                this.clear();
+                this.currentError = error;
             }
         }
     }
@@ -105,7 +108,10 @@ class Calculator {
             const result = this.#attemptEval();
             this.currentResult = result.toString().split("");
         } catch (error) {
-            // console.log(error);
+            if (error instanceof MathError) {
+                this.clear();
+                this.currentError = error;
+            }
         }
     }
 
@@ -136,35 +142,44 @@ class Calculator {
                 this.currentOperation[0]
             );
         } catch (error) {
-            this.clear();
-            this.currentError = error;
             throw error;
         }
     }
 
     #attemptCalc(operand1, operand2, operation) {
+        let result;
         switch (operation) {
             case "+":
-                return operand1 + operand2;
+                result = operand1 + operand2;
+                break;
             case "-":
-                return operand1 - operand2;
+                result = operand1 - operand2;
+                break;
             case "*":
-                return operand1 * operand2;
+                result = operand1 * operand2;
+                break;
             case "/":
                 if (operand2 === 0) {
-                    throw new MathError("Zero division error!");
+                    throw new MathError("Zero division error");
                 }
-                return operand1 / operand2;
+                result = operand1 / operand2;
+                break;
             case "%":
                 if (operand2 === 0) {
-                    throw new MathError("Zero division error!");
+                    throw new MathError("Zero division error");
                 }
-                return operand1 % operand2;
-            case "exp":
-                return operand1 ** operand2;
-            default:
+                result = operand1 % operand2;
                 break;
+            case "exp":
+                result = operand1 ** operand2;
+                break;
+            default:
+                throw new Error("Operand not recognized!");
         }
+        if (!isFinite(result)) {
+            throw new MathError("Infinity");
+        }
+        return result;
     }
 
     #undoResult() {
