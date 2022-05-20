@@ -14,7 +14,7 @@ document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => displayCalculator(calc));
 });
 
-// keyboard support
+/********** KEYBOARD SUPPORT ********/
 window.addEventListener("keydown", (e) => {
     if (e.key >= 0 && e.key <= 9) {
         calc.inputDigit(e.key);
@@ -36,6 +36,26 @@ window.addEventListener("keydown", (e) => {
     displayCalculator(calc);
 });
 
+/********** THEME SWITCHING ********/
+const body = document.body;
+const theme = localStorage.getItem("theme");
+if (theme) {
+    body.classList.add(theme);
+} else {
+    body.classList.add("light");
+}
+
+document.getElementById("theme-toggle").addEventListener("click", () => {
+    if (body.classList.contains("light")) {
+        body.classList.replace("light", "dark");
+        localStorage.setItem("theme", "dark");
+    } else if (body.classList.contains("dark")) {
+        body.classList.replace("dark", "light");
+        localStorage.setItem("theme", "light");
+    }
+});
+
+/********** CALCULATOR DISPLAY ********/
 function formatValue(value, maxLength, precision) {
     const formattedVal = document.createElement("span");
     if (value.length > maxLength) {
@@ -101,6 +121,7 @@ function displayCalculator(calc) {
     }
     // console.log(calc);
 }
+/*************************************/
 
 const calc = new Calculator();
 displayCalculator(calc);

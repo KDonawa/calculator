@@ -1,12 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
-* {
-    margin: 0;
-    padding: 0;
-    font-family: "Roboto", "sans-serif";
+.dark {
+    --primary: rgb(38, 38, 40);
+    --secondary: rgb(50, 50, 56);
+    --secondary-bg: rgba(41, 42, 43, 0.25);
+    --text: #fff;
+    --sun: rgb(101, 101, 101);
+    --moon: #fff;
+    --sun-size: 1rem;
+    --moon-size: 1.2rem;
+}
+.light {
+    --primary: #fff;
+    --secondary: rgb(248, 248, 248);
+    --secondary-bg: rgb(233, 231, 231, 0.15);
+    --text: #000;
+    --sun: rgb(66, 66, 66);
+    --moon: rgb(208, 207, 207);
+    --sun-size: 1.2rem;
+    --moon-size: 1rem;
+}
+.scheme-1 {
+    color: rgb(112, 231, 205);
+}
+.scheme-2 {
+    color: rgb(244, 102, 121);
 }
 
 body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", "sans-serif";
     background-color: rgb(229, 229, 229);
     height: 100vh;
     display: flex;
@@ -16,34 +40,71 @@ body {
     justify-content: space-around;
 }
 
-.scheme-1 {
-    color: rgb(112, 231, 205);
+button {
+    cursor: pointer;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
 }
-.scheme-2 {
-    color: rgb(244, 102, 121);
+button:hover {
+    transform: scale(1.2);
+}
+
+button:active {
+    font-size: 0.9rem;
 }
 
 .container {
-    background-color: rgb(38, 38, 40);
+    background-color: var(--primary);
     width: 20rem;
     height: 35rem;
     border-radius: 2rem;
     display: flex;
     flex-direction: column;
+    transition: background-color 1s ease-in-out;
 }
+
+/************ SCREEN ************/
 .screen {
     flex: 1;
-    color: #fff;
+    color: var(--text);
     padding: 1.5rem 2rem;
     letter-spacing: 0.1rem;
     position: relative;
 }
 
+#theme-toggle {
+    cursor: pointer;
+    background-color: var(--secondary);
+    width: 33%;
+    height: 2.25rem;
+    margin: auto;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: all 1s ease-in-out;
+}
+#theme-toggle > .fa-sun {
+    color: var(--sun);
+    font-size: var(--sun-size);
+}
+#theme-toggle > .fa-moon {
+    color: var(--moon);
+    font-size: var(--moon-size);
+}
+
 #upper-text {
-    font-size: 1.1rem;
     position: absolute;
-    bottom: 6rem;
+    bottom: 5.5rem;
     right: 2rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.9;
 }
 #upper-text > span {
     margin-left: 0.5rem;
@@ -52,7 +113,7 @@ body {
     font-size: 2.2rem;
     font-weight: 900;
     position: absolute;
-    bottom: 3rem;
+    bottom: 2.5rem;
     right: 2rem;
 }
 
@@ -71,32 +132,34 @@ body {
     animation: cursor-blink 1s steps(2) infinite;
 }
 
+#undo-btn {
+    position: absolute;
+    bottom: 0.25rem;
+    right: 2rem;
+    background-color: transparent;
+    font-size: 1.2rem;
+}
+#undo-btn > i {
+    /* color: #fff; */
+    opacity: 0.3;
+    padding: 0.5rem;
+}
+#undo-btn:active {
+    opacity: 0.5;
+}
+
+/************ KEYPAD ************/
 .keypad {
-    background-color: rgb(50, 50, 56);
+    background-color: var(--secondary);
     flex: 1.75;
     border-radius: 2rem;
     padding: 2rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-}
-button {
-    cursor: pointer;
-    background-color: rgba(41, 42, 43, 0.347);
-    color: #fff;
-    border: none;
-    border-radius: 0.5rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-    letter-spacing: 0.1rem;
-}
-button:hover {
-    transform: scale(1.2);
+    transition: background-color 0.5s ease-in-out;
 }
 
-button:active {
-    font-size: 0.9rem;
-}
 #add-btn,
 #subtract-btn,
 #multiply-btn,
@@ -115,23 +178,9 @@ button:active {
 }
 #exponent-btn > span {
     position: absolute;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
 }
-#undo-btn {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 2.5rem;
-    background-color: transparent;
-    font-size: 1.2rem;
-}
-#undo-btn > i {
-    color: #fff;
-    opacity: 0.3;
-    padding: 0.5rem;
-}
-#undo-btn:active {
-    opacity: 0.5;
-}
+/************ ************/
 
 footer {
     display: flex;
