@@ -24,8 +24,8 @@ Created with HTML, CSS and JS.
 
 ## Acknowledgement
 
-Project inspiration from [The Odin Project](https://www.theodinproject.com/home)
-Calculator design inspiration from  [Lucia Scott](https://dribbble.com/shots/14709020-Calculator)
+* Project inspiration from [The Odin Project](https://www.theodinproject.com/home)
+* Calculator design inspiration from  [Lucia Scott](https://dribbble.com/shots/14709020-Calculator)
 
 ## License
 
