@@ -1,8 +1,20 @@
 # Calculator
 
-Created with HTML, CSS and JS.
-
 [Live Demo](https://kdonawa.github.io/calculator/) :point_left:
+
+## Technologies Used
+
+Created with HTML, CSS and JS.
+<div>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="30" height="30"/>
+  &emsp;
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="30" height="30"/>
+  &emsp;
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="25" height="25"/>
+</div>
+
+
+
 
 ## Features
 
@@ -22,7 +34,7 @@ Created with HTML, CSS and JS.
 * Mobile design
 
 
-## Acknowledgement
+## Acknowledgements
 
 * Project inspiration from [The Odin Project](https://www.theodinproject.com/home)
 * Calculator design inspiration from  [Lucia Scott](https://dribbble.com/shots/14709020-Calculator)
